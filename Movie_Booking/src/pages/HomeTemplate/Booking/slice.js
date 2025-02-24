@@ -9,7 +9,6 @@ export const fetchShowtimeDetail = createAsyncThunk(
       const result = await api.get(
         `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${id}`
       );
-      console.log("API response:", result.data);
       // Kiểm tra dữ liệu trả về
       if (!result.data.content) {
         throw new Error("Dữ liệu phòng vé không hợp lệ");
@@ -28,8 +27,7 @@ export const fetchShowtimeDetail = createAsyncThunk(
       };
     } catch (error) {
       return rejectWithValue(
-        console.error("API error:", error)
-        // error.response?.data?.message || "Lỗi tải dữ liệu"
+        error.response?.data?.message || "Lỗi tải dữ liệu"
       );
     }
   }

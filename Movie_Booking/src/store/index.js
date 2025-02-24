@@ -5,6 +5,9 @@ import authReducer from "./../pages/AdminTemplate/AuthPage/slice";
 import bannerReducer from "./../pages/HomeTemplate/Banner/slice";
 import bookingReducer from "./../pages/HomeTemplate/Booking/slice";
 import showtimesReducer from "./../pages/HomeTemplate/ShowtimesMovies/slice";
+import signInReducer from "./../pages/HomeTemplate/SignIn/slice";
+import profileReducer from "./../pages/HomeTemplate/Profile/slice";
+import registerReducer from "./../pages/HomeTemplate/Register/slice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +17,8 @@ export const store = configureStore({
     bannerReducer,
     showtimesReducer,
     bookingReducer,
+    signInReducer,
+    profileReducer,
+    registerReducer,
   },
 });

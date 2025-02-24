@@ -1,12 +1,25 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../SignIn/slice.js"; // Điều chỉnh đường dẫn nếu cần
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // Lấy thông tin user từ Redux (đảm bảo key 'signIn' trùng với cấu hình store)
+  const { data: user } = useSelector((state) => state.signInReducer);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a
-          to="https://flowbite.com/"
+        <NavLink
+          to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <img
@@ -17,7 +30,7 @@ export default function Header() {
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Movie
           </span>
-        </a>
+        </NavLink>
         <button
           data-collapse-toggle="navbar-default"
           type="button"
@@ -28,7 +41,6 @@ export default function Header() {
           <span className="sr-only">Open main menu</span>
           <svg
             className="w-5 h-5"
-            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 17 14"
@@ -53,28 +65,50 @@ export default function Header() {
                 Home
               </NavLink>
             </li>
-
-            <li>
-              <NavLink
-                to="signin"
-                className={({ isActive }) => (isActive ? "text-blue-700" : "")}
-              >
-                Sign In
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="signup"
-                className={({ isActive }) => (isActive ? "text-blue-700" : "")}
-              >
-                Sign Up
-              </NavLink>
-            </li>
+            {user ? (
+              <li>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => navigate("/profile")}
+                    className="focus:outline-none"
+                  >
+                    <FaUserCircle className="text-3xl text-blue-600" />
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="text-white bg-red-600 hover:bg-red-700 px-3 py-1 rounded"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <NavLink
+                    to="/signin"
+                    className={({ isActive }) =>
+                      isActive ? "text-blue-700" : ""
+                    }
+                  >
+                    Sign In
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/register"
+                    className={({ isActive }) =>
+                      isActive ? "text-blue-700" : ""
+                    }
+                  >
+                    Sign Up
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
-
-  
     </nav>
   );
 }

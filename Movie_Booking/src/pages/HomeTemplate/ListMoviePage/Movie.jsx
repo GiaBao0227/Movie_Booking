@@ -26,12 +26,7 @@ export default function Movie({ movie }) {
         >
           Xem Chi Tiết
         </Link>
-        <Link
-          to={`/buy-ticket/${movie.maPhim}`}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-        >
-          Mua Vé
-        </Link>
+
       </div>
     </div>
   );

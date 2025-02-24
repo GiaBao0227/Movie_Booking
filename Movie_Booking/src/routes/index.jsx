@@ -14,7 +14,9 @@ import DetailMoviePage from "../pages/HomeTemplate/DetailMovie";
 import PageNotFound from "../pages/PageNotFound";
 import ShowtimesMoviesPage from "../pages/HomeTemplate/ShowtimesMovies";
 import BookingPage from "../pages/HomeTemplate/Booking";
-// import SignIn from "../pages/HomeTemplate/SignIn";
+import SignIn from "../pages/HomeTemplate/SignIn";
+import Profile from "../pages/HomeTemplate/Profile";
+import Register from "../pages/HomeTemplate/Register";
 // import SignUp from "../pages/HomeTemplate/SignUp";
 
 const routes = [
@@ -52,14 +54,17 @@ const routes = [
     path: "*",
     element: PageNotFound,
   },
-  // {
-  //   path: "sign-in",
-  //   element: SignIn,
-  // },
-  // {
-  //   path: "sign-up",
-  //   element: SignUp,
-  // },
+  {
+    path: "signin",
+    element: SignIn,
+  },{
+    path: "profile",
+    element: Profile,
+  },
+  {
+    path: "register",
+    element: Register,
+  },
 ];
 
 export const renderRoutes = () => {
