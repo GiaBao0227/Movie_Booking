@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import UsersPage from "../UsersPage";
 import { fetchListMovie, searchMovies } from "./slice";
 import Movie from "./Movie";
@@ -120,6 +120,7 @@ export default function DashboardPage() {
                         </svg>
                         Thêm phim
                       </button>
+                    
                     </div>
                   </div>
                   {/* Movie Table */}

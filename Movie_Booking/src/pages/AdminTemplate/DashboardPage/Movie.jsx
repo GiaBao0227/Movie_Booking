@@ -3,11 +3,19 @@ import { useDispatch } from "react-redux";
 import { fetchListMovie, deleteMovie } from "./slice";
 import { useNavigate } from "react-router-dom";
 import api from "./../../../services/api";
+import { NavLink } from 'react-router-dom';
 
 
 export default function Movie({ movie }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
+  const handleSetShowtime = (movie) => {
+    navigate(`/admin/dashboard/showtime/${movie.maPhim}`, {
+      state: { tenPhim: movie.tenPhim }, // Truyền tên phim qua state
+    });
+  };
 
   const handleEditClick = () => {
     navigate(`/admin/edit-movie/${movie.maPhim}`, { state: { movie } });
@@ -30,7 +38,11 @@ export default function Movie({ movie }) {
       <td className="px-4 py-3">{movie.tenPhim}</td>
       <td className="px-4 py-3 max-w-[12rem] truncate">{movie.moTa}</td>
       <td className="px-4 py-3 flex items-center justify-end space-x-2">
-        <button className="text-blue-600 hover:underline" onClick={handleEditClick}>
+        {/* btn edit */}
+        <button
+          className="text-blue-600 hover:underline"
+          onClick={handleEditClick}
+        >
           <svg
             className="w-6 h-6 text-blue-500 dark:text-white"
             aria-hidden="true"
@@ -49,7 +61,11 @@ export default function Movie({ movie }) {
             />
           </svg>
         </button>
-        <button className="text-red-600 hover:underline" onClick={handleDeleteClick}>
+        {/* btn delete  */}
+        <button
+          className="text-red-600 hover:underline"
+          onClick={handleDeleteClick}
+        >
           <svg
             className="w-6 h-6 text-red-400 dark:text-white"
             aria-hidden="true"
@@ -66,6 +82,28 @@ export default function Movie({ movie }) {
             />
           </svg>
         </button>
+        {/* btn showtime */}
+     
+          <button  onClick={() => handleSetShowtime(movie)} className="text-green-600 hover:underline">
+            <svg
+              className="w-6 h-6 text-green-600 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width={24}
+              height={24}
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.7}
+                d="M4 10h16M8 14h8m-4-7V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"
+              />
+            </svg>
+          </button>
+        
       </td>
     </tr>
   );
