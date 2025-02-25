@@ -57,7 +57,7 @@ const routes = [
   {
     path: "admin",
     element: AdminTemplate,
-    chilren: [
+    children: [
       {
         path: "dashboard",
         element: DashboardPage,
@@ -108,10 +108,10 @@ const routes = [
 
 export const renderRoutes = () => {
   return routes.map((route) => {
-    if (route.chilren) {
+    if (route.children) {
       return (
         <Route key={route.path} path={route.path} element={<route.element />}>
-          {route.chilren.map((item) => (
+          {route.children.map((item) => (
             <Route
               key={item.path}
               path={item.path}

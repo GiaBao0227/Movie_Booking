@@ -23,7 +23,7 @@ const SignInPage = () => {
   useEffect(() => {
     if (user) {
       if (user.maLoaiNguoiDung === "QuanTri") {
-        navigate("/admin");
+        navigate("/admin/dashboard");
       } else if (user.maLoaiNguoiDung === "KhachHang") {
         navigate("/");
       }
