@@ -17,6 +17,9 @@ import UsersPage from "../pages/AdminTemplate/UsersPage";
 import AddMoviePage from "../pages/AdminTemplate/AddMoviePage";
 import EditMoviePage from "../pages/AdminTemplate/EditMoviePage";
 import EditUserPage from "../pages/AdminTemplate/EditUserPage";
+import ShowTimePage from "../pages/AdminTemplate/ShowTimePage";
+
+
 import DetailMoviePage from "../pages/HomeTemplate/DetailMovie";
 import PageNotFound from "../pages/PageNotFound";
 import ShowtimesMoviesPage from "../pages/HomeTemplate/ShowtimesMovies";
@@ -81,6 +84,10 @@ const routes = [
       {
         path: "edit-user/:id",
         element: EditUserPage,
+      },
+      {
+        path: "dashboard/showtime/:maPhim",
+        element: ShowTimePage,
       },
     ],
   },
