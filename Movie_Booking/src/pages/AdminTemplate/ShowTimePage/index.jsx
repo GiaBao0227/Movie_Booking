@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import api from "../../../services/api";
 import moment from "moment";
+import { Navigate } from "react-router-dom";
 
 export default function ShowTime() {
   const { maPhim } = useParams();
@@ -10,15 +11,14 @@ export default function ShowTime() {
 
   const [heThongRap, setHeThongRap] = useState([]);
   const [cumRap, setCumRap] = useState([]);
-  const [raps, setRaps] = useState([]);
 
   const [selectedHeThongRap, setSelectedHeThongRap] = useState("");
   const [selectedCumRap, setSelectedCumRap] = useState("");
 
   const [showtimeData, setShowtimeData] = useState({
-    maPhim: parseInt(maPhim) || 0, // Chuyển maPhim thành số nguyên
+    maPhim: parseInt(maPhim) || 0,
     ngayChieuGioChieu: "",
-    maRap: 0, // Khởi tạo maRap với giá trị số nguyên
+    maRap: "", // Sửa maRap thành string để chứa maCumRap
     giaVe: 0,
   });
 
@@ -59,22 +59,13 @@ export default function ShowTime() {
     fetchCumRap();
   }, [selectedHeThongRap]);
 
-  // Lấy danh sách rạp từ cụm rạp đã chọn
-  useEffect(() => {
-    if (selectedCumRap) {
-      const selectedCum = cumRap.find((cum) => cum.maCumRap === selectedCumRap);
-      setRaps(selectedCum?.danhSachRap || []);
-    } else {
-      setRaps([]);
-    }
-  }, [selectedCumRap, cumRap]);
-  //ep kieu cho maRap
+  // Cập nhật maRap khi chọn cụm rạp
   useEffect(() => {
     setShowtimeData((prev) => ({
       ...prev,
-      maRap: Number(prev.maRap) || 0, // Chuyển thành số ngay khi state thay đổi
+      maRap: selectedCumRap || "", // Gán maCumRap vào maRap
     }));
-  }, [showtimeData.maRap]);
+  }, [selectedCumRap]);
 
   // Submit tạo lịch chiếu
   const handleSubmit = async (e) => {
@@ -84,7 +75,7 @@ export default function ShowTime() {
     if (
       !showtimeData.maPhim ||
       !showtimeData.ngayChieuGioChieu ||
-      !showtimeData.maRap ||
+      !showtimeData.maRap || // Giờ là maCumRap
       !showtimeData.giaVe
     ) {
       alert("Vui lòng nhập đầy đủ thông tin!");
@@ -97,7 +88,7 @@ export default function ShowTime() {
       console.log("Showtime created:", response.data);
     } catch (error) {
       console.error("Lỗi khi tạo lịch chiếu:", error.response?.data.content || error);
-      alert("Có lỗi xảy ra, vui lòng thử lại!");
+      alert(`error: ${error.response?.data.content || error}`);
     }
   };
 
@@ -142,27 +133,6 @@ export default function ShowTime() {
             {cumRap.map((rap) => (
               <option key={rap.maCumRap} value={rap.maCumRap}>
                 {rap.tenCumRap}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700">Mã Rạp</label>
-          <select
-            className="w-full p-2 border rounded"
-            value={showtimeData.maRap}
-            onChange={(e) =>
-              setShowtimeData((prev) => ({
-                ...prev,
-                maRap: Number(e.target.value) || 0, // Dùng Number() thay vì parseInt()
-              }))
-            }
-          >
-            <option value="">Chọn mã rạp</option>
-            {raps.map((rap) => (
-              <option key={rap.maRap} value={rap.maRap}>
-                {rap.tenRap}
               </option>
             ))}
           </select>
